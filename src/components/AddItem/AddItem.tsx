@@ -1,12 +1,15 @@
-import { useDispatch } from 'react-redux'
 import Button from "@mui/material/Button"
-import { createItem } from '../../store/list';
-
+import {useState} from 'react';
+import { AddItemModal } from "../AddItemModal/AddItemModal";
+ 
 export const AddItem: React.FC = () => {
-    const dispatch = useDispatch();
-    return <Button variant="contained" onClick={() => {
-        dispatch(createItem('aaaaaaa'))
-    }}>
+
+    const [addItemActive, setItemActive] = useState(true);
+
+    return <>
+    <Button variant="contained" onClick={() => {setItemActive(true)}}>
         Добавить
     </Button>
+     <AddItemModal active ={addItemActive} setActive={setItemActive} />
+     </>
 }

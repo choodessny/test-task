@@ -1,8 +1,7 @@
 import List from "@mui/material/List"
-import IconButton from "@mui/material/IconButton"
 import ListItem from "@mui/material/ListItem"
 import { TItem } from "../../store/list"
-import DeleteIcon from '@mui/icons-material/Delete';
+import { DeleteItem } from "../DeleteItem/DeleteItem";
 
 type TListProps = {
     items: TItem[]
@@ -13,9 +12,7 @@ export const ItemsList: React.FC<TListProps> =({items})=>{
         {items.map(item=>(
             <ListItem
                 secondaryAction={
-                    <IconButton edge="end" aria-label="delete">
-                        <DeleteIcon />
-                    </IconButton>
+                    <DeleteItem id={item.id}/>
                 }
                 key={item.id}>
                 {item.text}

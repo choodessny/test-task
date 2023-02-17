@@ -1,5 +1,3 @@
-import { createStore } from 'redux'
-
 export type TItem = {
     text: string
     id: number
@@ -14,7 +12,7 @@ type TCreateAction = {
 
 type TDeleteAction = {
     type: 'delete'
-    payload: number
+    payload: number 
 }
 
 type TAction = TCreateAction | TDeleteAction
