@@ -1,15 +1,39 @@
-import { combineReducers, createStore } from "redux";
-import { listReducer, TItem } from "./list";
+import { combineReducers, createStore, applyMiddleware, compose } from "redux";
+import createSagaMiddleware from "redux-saga";
+import rootSaga from "../sagas";
+import { TItem, listReducer } from "./list";
+import { TModalState, modalReducer } from "./modal";
+import { userDataReducer, TUserState } from "./userData";
 
 export type TStore = {
-    list: TItem[]
+  list: TItem[];
+  modal: TModalState;
+  userData: TUserState;
+};
+
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: any;
+  }
 }
 
-declare const __REDUX_DEVTOOLS_EXTENSION__: () => any;
-
-export const store = createStore(
+export const sagaMiddleWare = createSagaMiddleware();
+export const configureStore = (preloadedState: {}) =>
+  createStore(
     combineReducers({
-        list: listReducer
+      list: listReducer,
+      modal: modalReducer,
+      userData: userDataReducer,
     }),
-    __REDUX_DEVTOOLS_EXTENSION__ && __REDUX_DEVTOOLS_EXTENSION__()
-)
+    preloadedState,
+    composeEnhancers(applyMiddleware(sagaMiddleWare))
+  );
+
+export const composeEnhancers =
+  typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
+    : compose;
+
+export const store = configureStore({});
+
+sagaMiddleWare.run(rootSaga);

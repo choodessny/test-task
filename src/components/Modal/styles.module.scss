@@ -1,0 +1,30 @@
+.modalContainer {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400;
+  border: 2px solid #000000;
+  border-radius: 12px;
+  box-shadow: 24;
+  background-color: #ffffff;
+  .childrenContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+  .buttonsContainer {
+    margin: 0px -10px -10px -10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top: 1px solid #000000;
+    padding: 15px;
+    gap: 10px;
+  }
+}

@@ -1,22 +1,39 @@
-import { createItem } from '../../store/list';
-import { useDispatch } from 'react-redux';
-import Button from "@mui/material/Button"
-import { Modal } from '@mui/material';
+import { ModalTypes, resetModal } from "../../store/modal";
+import Input from "@mui/material/Input";
+import Modal from "../Modal/Modal";
+import { createItem } from "../../store/list";
+import { useAppSelector } from "../../store/useAppSelector";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
 
-type TModalProps = {active: boolean, setActive: (newActive:boolean)=>void}
+export const AddItemModal: React.FC = () => {
+  const dispatch = useDispatch();
+  const [text, setText] = useState("");
+  const open =
+    useAppSelector((store) => store.modal.type) === ModalTypes.ADD_ITEM;
 
-export const AddItemModal: React.FC<TModalProps> = ({active, setActive}) => {
-    const dispatch = useDispatch();
-
- return <Modal open={active}>
-<>
- <Button variant="contained" onClick={() => {
-    dispatch(createItem('aaaaaaa'))}}>
-    Ок
-</Button>
-<Button variant="contained" onClick={() => setActive(false)}>
-    Отмена
-    </Button>
-    </>
+  return (
+    <Modal
+      open={open}
+      title="Добавление записи"
+      onSubmit={() => {
+        if (text) {
+          dispatch(createItem(text));
+          setText("");
+          dispatch(resetModal());
+        }
+      }}
+      submitDisabled={!text}
+      onClose={() => {
+        setText("");
+      }}
+    >
+      <Input
+        value={text}
+        onChange={(e) => {
+          setText(e.target.value);
+        }}
+      />
     </Modal>
+  );
 };
